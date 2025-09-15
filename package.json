@@ -1,0 +1,27 @@
+{
+  "name": "linkdin-bot",
+  "version": "1.0.0",
+  "description": "A TypeScript bot to message new LinkedIn connections.",
+  "keywords": [
+    "\"linkedin\""
+  ],
+  "license": "ISC",
+  "author": "prafull singh",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "build":"tsc",
+    "start":"node ./dist/index.js"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.2",
+    "puppeteer": "^24.20.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.3.1",
+    "@types/puppeteer": "^5.4.7",
+    "nodemon": "^3.1.10",
+    "tsc-watch": "^7.1.1",
+    "typescript": "^5.9.2"
+  }
+}
