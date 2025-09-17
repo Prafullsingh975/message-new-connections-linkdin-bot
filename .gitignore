@@ -3,3 +3,4 @@ linkedin_user_data
 .env
 dist
 messaged_connections.txt
+failed_connections.txt

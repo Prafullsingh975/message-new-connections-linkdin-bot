@@ -4,6 +4,7 @@ import path from "path";
 import fs from "fs";
 import {
   closeMessageModal,
+  filterFailedConnectionData,
   loadMessagedConnections,
   saveMessagedConnection,
   sleep,
@@ -39,6 +40,12 @@ const TRACKER_FILE = path.resolve(
   __dirname,
   "..",
   process.env.MESSAGE_RECORD_FILE_NAME as string
+);
+
+const FAIL_TRACKER_FILE = path.resolve(
+  __dirname,
+  "..",
+  process.env.FAIL_RECORD_FILE_NAME as string
 );
 
 // --- CORE BOT LOGIC ---
@@ -155,7 +162,7 @@ async function getNewConnections(page: Page): Promise<Connection[]> {
 
     // Scroll down to load more connections
     console.log("Scrolling to load connections...");
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < 3; i++) {
       await innerWorkspace.evaluate((el) => {
         el.scrollTo({
           top: el.scrollHeight,
@@ -285,6 +292,7 @@ async function sendMessageWithResume(
       `Failed to send message to ${connection.firstName}. Skipping.`,
       error
     );
+    saveMessagedConnection(connection.profileUrl, FAIL_TRACKER_FILE);
     return false;
   }
 }
@@ -316,7 +324,7 @@ async function main() {
     // });
 
     browser = await puppeteer.launch({
-      headless: true,
+      headless: false,
       args: ["--window-size=1280,800"],
       userDataDir: path.resolve(__dirname, "..", "linkedin_user_data"), // save browser data and cookies
     });
@@ -366,6 +374,20 @@ async function main() {
   } finally {
     if (browser) {
       await browser.close();
+    }
+
+    const messagedConnections = loadMessagedConnections(TRACKER_FILE);
+    const failedCollection = loadMessagedConnections(FAIL_TRACKER_FILE);
+
+    const data = filterFailedConnectionData(
+      Array.from(failedCollection),
+      Array.from(messagedConnections)
+    );
+
+    fs.unlinkSync(FAIL_TRACKER_FILE);
+
+    for (const url of data) {
+      saveMessagedConnection(url, FAIL_TRACKER_FILE);
     }
   }
 }

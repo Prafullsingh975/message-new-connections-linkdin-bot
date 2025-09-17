@@ -62,3 +62,11 @@ export async function closeMessageModal(page: Page) {
     );
   }
 }
+
+export const filterFailedConnectionData = (
+  failedURL: string[],
+  successURL: string[]
+) => {
+  const filteredData = failedURL.filter((url) => !successURL.includes(url));
+  return filteredData;
+};
