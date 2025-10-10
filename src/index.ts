@@ -87,13 +87,15 @@ async function login(
   console.log("Checking login status...");
   try {
     // Go to the feed. If not logged in, LinkedIn will redirect to the login page.
-    await page.goto("https://www.linkedin.com/feed/", {
+    await page.goto("https://www.linkedin.com/feed", {
       waitUntil: "domcontentloaded",
     });
 
     // Look for a selector that only exists when logged in (e.g., the search bar).
     // If it's found, we're already logged in.
-    await page.waitForSelector("#global-nav", { timeout: 5000 });
+    const navbar = await page.waitForSelector("#global-nav", {
+      timeout: 10000,
+    });
     console.log("Already logged in.");
     return true;
   } catch (e) {
@@ -101,6 +103,9 @@ async function login(
     console.log("Not logged in. Proceeding to log in manually...");
     try {
       // Now we can safely perform the login steps.
+      await page.goto("https://www.linkedin.com/login", {
+        waitUntil: "domcontentloaded",
+      });
       await page.waitForSelector("#username", { timeout: 10000 });
       await page.type("#username", email);
       await page.type("#password", password);
