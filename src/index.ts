@@ -17,7 +17,7 @@ Hi {name},
 
 I hope you’re doing well. I’m Prafulla Kumar, currently working as a Full-Stack Developer at Zerror Studios and pursuing my B.Tech in Computer Science (2021–2025). Over the past 1.5+ years, I’ve built scalable SaaS applications, implemented microservices architecture, optimized performance using Redis and MongoDB transactions, and delivered production-ready features in MERN and React Native stacks.
 
-I’m very interested in Software Development Engineer role and believe my experience in building scalable, real-time systems with Node.js, React, and cloud services (AWS EC2, S3, CloudFront, SES) aligns well with your requirements.
+I’m very interested in Software Development Engineer role and believe my experience in building scalable, real-time systems with Node.js, React, cloud services (AWS EC2, S3, CloudFront, SES), testing (Unit, Integration) aligns well with your requirements.
 
 Would you be open to referring me for the SDE position? I’d be happy to share my resume or any additional details you may need.
 
